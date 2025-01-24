@@ -1,0 +1,79 @@
+<div class="login-container">
+  <div class="login-content">
+    <div class="logo-container">
+      <img [src]="logoPath" alt="Logo" class="logo">
+    </div>
+    
+    <h1>Welcome Back!</h1>
+    <p class="subtitle">Sign in to continue to Web GED.</p>
+
+    <form (ngSubmit)="onSubmit()" class="login-form">
+      <div class="form-group">
+        <label for="username">Username</label>
+        <input 
+          type="text" 
+          id="username"
+          [(ngModel)]="username"
+          name="username"
+          placeholder="Enter username"
+          required>
+      </div>
+
+      <div class="form-group">
+        <label for="password">
+          Password
+          <a href="#" class="forgot-password">Forgot password?</a>
+        </label>
+        <div class="password-input">
+          <input 
+            [type]="showPassword ? 'text' : 'password'"
+            id="password"
+            [(ngModel)]="password"
+            name="password"
+            placeholder="Enter password"
+            required>
+          <button 
+            type="button" 
+            class="toggle-password"
+            (click)="togglePasswordVisibility()">
+            <i class="fas" [class.fa-eye]="!showPassword" [class.fa-eye-slash]="showPassword"></i>
+          </button>
+        </div>
+      </div>
+
+      <div class="remember-me">
+        <label>
+          <input 
+            type="checkbox"
+            [(ngModel)]="rememberMe"
+            name="rememberMe">
+          Remember me
+        </label>
+      </div>
+
+      <button type="submit" class="sign-in-button">Sign In</button>
+
+      <div class="social-login">
+        <p>Sign In with</p>
+        <div class="social-buttons">
+          <button type="button" class="social-button facebook">
+            <i class="fab fa-facebook-f"></i>
+          </button>
+          <button type="button" class="social-button google">
+            <i class="fab fa-google"></i>
+          </button>
+          <button type="button" class="social-button github">
+            <i class="fab fa-github"></i>
+          </button>
+          <button type="button" class="social-button twitter">
+            <i class="fab fa-twitter"></i>
+          </button>
+        </div>
+      </div>
+
+      <p class="signup-link">
+        Don't have an account? <a href="#">Signup</a>
+      </p>
+    </form>
+  </div>
+</div>

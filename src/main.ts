@@ -9,9 +9,11 @@ import { UnitsPageComponent } from './app/pages/units/units.component';
 import { ClientsPageComponent } from './app/pages/clients/clients.component';
 import { AppointmentsPageComponent } from './app/pages/appointments/appointments.component';
 import { UsersPageComponent } from './app/pages/users/users.component';
+import { LoginComponent } from './app/pages/login/login.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
+  { path: '', redirectTo: '/login', pathMatch: 'full' },
+  { path: 'login', component: LoginComponent },
   { path: 'dashboard', component: DashboardComponent },
   { path: 'units', component: UnitsPageComponent },
   { path: 'clients', component: ClientsPageComponent },
@@ -24,13 +26,16 @@ const routes: Routes = [
   standalone: true,
   imports: [CommonModule, RouterOutlet, RouterModule, SidebarComponent, HeaderComponent],
   template: `
-    <div class="app-container" [class.sidebar-collapsed]="sidebarCollapsed">
-      <app-sidebar (collapse)="onSidebarCollapse($event)"></app-sidebar>
-      <main>
-        <app-header></app-header>
-        <router-outlet></router-outlet>
-      </main>
-    </div>
+    <router-outlet *ngIf="isLoginPage; else mainLayout"></router-outlet>
+    <ng-template #mainLayout>
+      <div class="app-container" [class.sidebar-collapsed]="sidebarCollapsed">
+        <app-sidebar (collapse)="onSidebarCollapse($event)"></app-sidebar>
+        <main>
+          <app-header></app-header>
+          <router-outlet></router-outlet>
+        </main>
+      </div>
+    </ng-template>
   `,
   styles: [`
     .app-container {
@@ -50,6 +55,10 @@ const routes: Routes = [
 })
 export class App {
   sidebarCollapsed = false;
+
+  get isLoginPage(): boolean {
+    return window.location.pathname === '/login';
+  }
 
   onSidebarCollapse(collapsed: boolean) {
     this.sidebarCollapsed = collapsed;
