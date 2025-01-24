@@ -1,0 +1,74 @@
+<header>
+  <div class="left">
+    <button class="unit-selector" (click)="toggleDropdown('unit')">
+      <i class="fas fa-building"></i>
+      <span>Selecionar Unidade</span>
+      <i class="fas fa-chevron-down"></i>
+    </button>
+    <div class="dropdown unit-dropdown" *ngIf="showUnitDropdown">
+      <div class="dropdown-item" *ngFor="let unit of units" (click)="selectUnit(unit)">
+        {{unit.name}}
+      </div>
+    </div>
+  </div>
+
+  <div class="location">
+    <i class="fas fa-map-marker-alt"></i>
+    <span>Avaré - SP</span>
+  </div>
+
+  <div class="right">
+    <div class="language-selector">
+      <button (click)="toggleDropdown('language')">
+        <img [src]="'https://flagcdn.com/' + currentLanguage.code.toLowerCase() + '.svg'" [alt]="currentLanguage.name" class="flag-icon">
+      </button>
+      <div class="dropdown language-dropdown" *ngIf="showLanguageDropdown">
+        <div class="dropdown-item" *ngFor="let lang of languages" (click)="selectLanguage(lang)">
+          <img [src]="'https://flagcdn.com/' + lang.code.toLowerCase() + '.svg'" [alt]="lang.name" class="flag-icon">
+          <span>{{lang.name}}</span>
+        </div>
+      </div>
+    </div>
+
+    <button class="theme-toggle" (click)="toggleTheme()">
+      <i class="fas" [class.fa-sun]="isDarkMode" [class.fa-moon]="!isDarkMode"></i>
+    </button>
+
+    <div class="notifications">
+      <button (click)="toggleDropdown('notifications')" class="notification-btn">
+        <i class="fas fa-bell"></i>
+        <span class="notification-badge">7</span>
+      </button>
+      <div class="dropdown notifications-dropdown" *ngIf="showNotificationsDropdown">
+        <div class="notification-item" *ngFor="let notification of notifications">
+          <div class="notification-content">
+            <div class="notification-title">{{notification.title}}</div>
+            <div class="notification-description">{{notification.description}}</div>
+            <div class="notification-time">{{notification.time}}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="user-info">
+      <button (click)="toggleDropdown('user')" class="user-btn">
+        <i class="lucide lucide-circle-user h-5 w-5"></i>
+        <span>Renan</span>
+      </button>
+      <div class="dropdown user-dropdown" *ngIf="showUserDropdown">
+        <div class="dropdown-item">
+          <i class="fas fa-user"></i>
+          <span>Meu Perfil</span>
+        </div>
+        <div class="dropdown-item">
+          <i class="fas fa-cog"></i>
+          <span>Configurações</span>
+        </div>
+        <div class="dropdown-item">
+          <i class="fas fa-sign-out-alt"></i>
+          <span>Sair</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>

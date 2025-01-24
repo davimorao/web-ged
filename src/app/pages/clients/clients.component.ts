@@ -2,10 +2,10 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 @Component({
-  selector: 'app-units-page',
+  selector: 'app-clients-page',
   standalone: true,
   imports: [CommonModule],
-  templateUrl: './units.component.html',
+  templateUrl: './clients.component.html',
   styles: [`
     .page-container {
       padding: 2rem;
@@ -18,6 +18,6 @@ import { CommonModule } from '@angular/common';
     }
   `]
 })
-export class UnitsPageComponent {
-  title = 'Units';
+export class ClientsPageComponent {
+  title = 'Clients';
 }

@@ -1,0 +1,38 @@
+<!-- Main container with responsive padding and max-width -->
+<div class="container mx-auto px-2 sm:px-4 lg:px-6 py-4">
+  <!-- Stats/Charts Section -->
+  <div class="flex flex-col gap-4">
+    <!-- Top row charts - Stack on mobile, side by side on larger screens -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+      <!-- Appointments Overview Chart -->
+      <div class="w-full h-full min-h-[300px] bg-white dark:bg-gray-800 rounded-lg shadow-lg p-3 sm:p-4">
+        <h2 class="text-lg sm:text-xl font-semibold mb-3 text-gray-800 dark:text-white">
+          Appointments Overview
+        </h2>
+        <div class="relative w-full h-[250px] sm:h-[300px]">
+          <canvas id="appointmentsChart" class="w-full h-full"></canvas>
+        </div>
+      </div>
+
+      <!-- Appointment Status Chart -->
+      <div class="w-full h-full min-h-[300px] bg-white dark:bg-gray-800 rounded-lg shadow-lg p-3 sm:p-4">
+        <h2 class="text-lg sm:text-xl font-semibold mb-3 text-gray-800 dark:text-white">
+          Appointment Status
+        </h2>
+        <div class="relative w-full h-[250px] sm:h-[300px]">
+          <canvas id="statusChart" class="w-full h-full"></canvas>
+        </div>
+      </div>
+    </div>
+
+    <!-- Full width Documents Chart -->
+    <div class="w-full min-h-[300px] bg-white dark:bg-gray-800 rounded-lg shadow-lg p-3 sm:p-4">
+      <h2 class="text-lg sm:text-xl font-semibold mb-3 text-gray-800 dark:text-white">
+        Documents per Month
+      </h2>
+      <div class="relative w-full h-[250px] sm:h-[400px]">
+        <canvas id="documentsChart" class="w-full h-full"></canvas>
+      </div>
+    </div>
+  </div>
+</div>
