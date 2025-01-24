@@ -1,14 +1,14 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MatTableModule, MatTable } from '@angular/material/table';
-import { MatPaginatorModule, MatPaginator } from '@angular/material/paginator';
-import { MatSortModule, MatSort } from '@angular/material/sort';
-import { MatInputModule } from '@angular/material/input';
-import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
 import { MatDialogModule, MatDialog } from '@angular/material/dialog';
 import { FormsModule } from '@angular/forms';
 import { EditUnitDialogComponent } from './edit-unit-dialog.component';
 import { UserPreferencesService } from '../../services/user-preferences.service';
+
+declare var $: any;
 
 export interface Unit {
   id: number;
@@ -25,43 +25,40 @@ export interface Unit {
   standalone: true,
   imports: [
     CommonModule,
-    MatTableModule,
-    MatPaginatorModule,
-    MatSortModule,
-    MatInputModule,
-    MatFormFieldModule,
+    MatCheckboxModule,
+    MatButtonModule,
+    MatIconModule,
     MatDialogModule,
     FormsModule
   ],
   templateUrl: './units.component.html',
   styleUrls: ['./units.component.css']
 })
-export class UnitsPageComponent implements OnInit {
-  displayedColumns: string[] = ['select', 'id', 'name', 'document', 'actions'];
-  dataSource: Unit[] = [
-    {
-      id: 1,
-      name: 'Unidade Centro',
-      document: '12345678000199',
-      documentType: 'CNPJ',
-      phone: '1133333333',
-      email: 'centro@clinica.com.br'
-    },
-    {
-      id: 2,
-      name: 'Unidade Norte',
-      document: '98765432000199',
-      documentType: 'CNPJ',
-      phone: '1144444444',
-      email: 'norte@clinica.com.br'
-    }
-  ];
+export class UnitsPageComponent implements OnInit, AfterViewInit {
+  dataSource = {
+    data: [
+      {
+        id: 1,
+        name: 'Unidade Centro',
+        document: '12345678000199',
+        documentType: 'CNPJ',
+        phone: '1133333333',
+        email: 'centro@clinica.com.br'
+      },
+      {
+        id: 2,
+        name: 'Unidade Norte',
+        document: '98765432000199',
+        documentType: 'CNPJ',
+        phone: '1144444444',
+        email: 'norte@clinica.com.br'
+      }
+    ]
+  };
 
-  @ViewChild(MatPaginator) paginator!: MatPaginator;
-  @ViewChild(MatSort) sort!: MatSort;
-  @ViewChild(MatTable) table!: MatTable<Unit>;
-
+  title: string = 'Unidades';
   isDarkMode: boolean = true;
+  private dataTable: any;
 
   constructor(
     private dialog: MatDialog,
@@ -74,9 +71,26 @@ export class UnitsPageComponent implements OnInit {
 
   ngOnInit() {}
 
-  applyFilter(event: Event) {
-    const filterValue = (event.target as HTMLInputElement).value;
-    // Implement filtering logic here
+  ngAfterViewInit() {
+    this.initializeDataTable();
+  }
+
+  private initializeDataTable() {
+    this.dataTable = $('#unitsTable').DataTable({
+      language: {
+        url: '//cdn.datatables.net/plug-ins/1.13.7/i18n/pt-BR.json'
+      },
+      columnDefs: [
+        {
+          targets: [0, 4], // checkbox and actions columns
+          orderable: false
+        }
+      ],
+      order: [[1, 'asc']], // Order by ID column by default
+      responsive: true,
+      pageLength: 10,
+      lengthMenu: [5, 10, 25, 50]
+    });
   }
 
   editUnit(unit: Unit) {
@@ -87,17 +101,33 @@ export class UnitsPageComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        // Update unit in the table
-        const index = this.dataSource.findIndex(u => u.id === result.id);
+        // Update unit in the data source
+        const index = this.dataSource.data.findIndex(u => u.id === result.id);
         if (index !== -1) {
-          this.dataSource[index] = result;
-          this.table.renderRows();
+          this.dataSource.data[index] = result;
+          // Refresh DataTable
+          this.dataTable.clear();
+          this.dataTable.rows.add(this.dataSource.data);
+          this.dataTable.draw();
         }
       }
     });
   }
 
   deleteUnit(unit: Unit) {
-    // Implement delete logic
+    const index = this.dataSource.data.findIndex(u => u.id === unit.id);
+    if (index !== -1) {
+      this.dataSource.data.splice(index, 1);
+      // Refresh DataTable
+      this.dataTable.clear();
+      this.dataTable.rows.add(this.dataSource.data);
+      this.dataTable.draw();
+    }
+  }
+
+  ngOnDestroy() {
+    if (this.dataTable) {
+      this.dataTable.destroy();
+    }
   }
 }

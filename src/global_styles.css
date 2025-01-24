@@ -1,4 +1,5 @@
 @import '@fortawesome/fontawesome-free/css/all.css';
+@import '@angular/material/prebuilt-themes/deeppurple-amber.css';
 
 :root {
   --primary-color: #1a2634;

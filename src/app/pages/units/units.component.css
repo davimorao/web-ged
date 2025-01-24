@@ -37,29 +37,97 @@ h1 {
   border-radius: 0.5rem;
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
   overflow: hidden;
-}
-
-.card-header {
   padding: 1rem;
-  border-bottom: 1px solid rgba(255,255,255,0.1);
-}
-
-.search-box {
-  max-width: 300px;
 }
 
 .table-container {
   overflow-x: auto;
 }
 
-table {
-  width: 100%;
+/* DataTables Styling */
+.dataTables_wrapper {
+  color: var(--text-color);
 }
 
-.mat-mdc-row:hover {
-  background: rgba(255,255,255,0.05);
+.dataTables_length,
+.dataTables_filter {
+  margin-bottom: 1rem;
 }
 
+.dataTables_length select,
+.dataTables_filter input {
+  background-color: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: var(--text-color);
+  padding: 0.5rem;
+  border-radius: 0.25rem;
+}
+
+.dataTables_filter input {
+  margin-left: 0.5rem;
+}
+
+table.dataTable {
+  width: 100% !important;
+  margin: 1rem 0 !important;
+  color: var(--text-color);
+  border-collapse: collapse;
+}
+
+table.dataTable thead th {
+  background-color: rgba(0, 0, 0, 0.2);
+  color: var(--text-color);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 1rem;
+}
+
+table.dataTable tbody td {
+  padding: 1rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+table.dataTable tbody tr {
+  background-color: transparent;
+  transition: background-color 0.2s;
+}
+
+table.dataTable tbody tr:hover {
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+.dataTables_info,
+.dataTables_paginate {
+  margin-top: 1rem;
+  color: var(--text-color);
+}
+
+.dataTables_paginate .paginate_button {
+  padding: 0.5rem 1rem;
+  margin: 0 0.25rem;
+  border-radius: 0.25rem;
+  background: rgba(255, 255, 255, 0.05);
+  border: none;
+  color: var(--text-color) !important;
+  cursor: pointer;
+}
+
+.dataTables_paginate .paginate_button:hover {
+  background: rgba(255, 255, 255, 0.1) !important;
+  border: none;
+}
+
+.dataTables_paginate .paginate_button.current {
+  background: var(--accent-color) !important;
+  color: white !important;
+  border: none;
+}
+
+.dataTables_paginate .paginate_button.disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Action Buttons */
 .action-btn {
   background: none;
   border: none;
@@ -68,6 +136,7 @@ table {
   cursor: pointer;
   opacity: 0.7;
   transition: opacity 0.2s;
+  margin: 0 0.25rem;
 }
 
 .action-btn:hover {
@@ -82,24 +151,15 @@ table {
   color: #e74c3c;
 }
 
-/* Dark mode overrides */
-:host-context([data-theme="dark"]) {
-  .mat-mdc-table {
-    background: var(--card-background);
-    color: var(--text-color);
-  }
+/* Checkbox styles */
+:host ::ng-deep .mat-mdc-checkbox {
+  margin: 0;
+}
 
-  .mat-mdc-header-cell {
-    background: var(--primary-color);
-    color: var(--text-color);
-  }
+:host ::ng-deep .mat-mdc-checkbox .mdc-checkbox__background {
+  border-color: var(--text-color) !important;
+}
 
-  .mat-mdc-cell {
-    color: var(--text-color);
-  }
-
-  .mat-mdc-paginator {
-    background: var(--card-background);
-    color: var(--text-color);
-  }
+:host ::ng-deep .mat-mdc-checkbox .mdc-checkbox__checkmark {
+  color: var(--card-background) !important;
 }

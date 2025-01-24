@@ -8,64 +8,38 @@
   </div>
 
   <div class="card">
-    <div class="card-header">
-      <div class="search-box">
-        <mat-form-field appearance="outline">
-          <mat-label>Search</mat-label>
-          <input matInput (keyup)="applyFilter($event)" placeholder="Type to search..." #input>
-          <i class="fas fa-search" matSuffix></i>
-        </mat-form-field>
-      </div>
-    </div>
-
     <div class="table-container">
-      <table mat-table [dataSource]="dataSource" matSort>
-        <!-- Checkbox Column -->
-        <ng-container matColumnDef="select">
-          <th mat-header-cell *matHeaderCellDef>
-            <mat-checkbox></mat-checkbox>
-          </th>
-          <td mat-cell *matCellDef="let row">
-            <mat-checkbox></mat-checkbox>
-          </td>
-        </ng-container>
-
-        <!-- ID Column -->
-        <ng-container matColumnDef="id">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header>ID</th>
-          <td mat-cell *matCellDef="let row">{{row.id}}</td>
-        </ng-container>
-
-        <!-- Name Column -->
-        <ng-container matColumnDef="name">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header>Nome Fantasia</th>
-          <td mat-cell *matCellDef="let row">{{row.name}}</td>
-        </ng-container>
-
-        <!-- Document Column -->
-        <ng-container matColumnDef="document">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header>Documento</th>
-          <td mat-cell *matCellDef="let row">{{row.document}}</td>
-        </ng-container>
-
-        <!-- Actions Column -->
-        <ng-container matColumnDef="actions">
-          <th mat-header-cell *matHeaderCellDef>Ações</th>
-          <td mat-cell *matCellDef="let row">
-            <button class="action-btn edit" (click)="editUnit(row)">
-              <i class="fas fa-edit"></i>
-            </button>
-            <button class="action-btn delete" (click)="deleteUnit(row)">
-              <i class="fas fa-trash"></i>
-            </button>
-          </td>
-        </ng-container>
-
-        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      <table id="unitsTable" class="display" style="width:100%">
+        <thead>
+          <tr>
+            <th>
+              <mat-checkbox></mat-checkbox>
+            </th>
+            <th>ID</th>
+            <th>Nome Fantasia</th>
+            <th>Documento</th>
+            <th>Ações</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let unit of dataSource.data">
+            <td>
+              <mat-checkbox></mat-checkbox>
+            </td>
+            <td>{{unit.id}}</td>
+            <td>{{unit.name}}</td>
+            <td>{{unit.document}}</td>
+            <td>
+              <button class="action-btn edit" (click)="editUnit(unit)">
+                <i class="fas fa-edit"></i>
+              </button>
+              <button class="action-btn delete" (click)="deleteUnit(unit)">
+                <i class="fas fa-trash"></i>
+              </button>
+            </td>
+          </tr>
+        </tbody>
       </table>
-
-      <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page of units"></mat-paginator>
     </div>
   </div>
 </div>
